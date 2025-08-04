@@ -1,0 +1,11 @@
+[package]
+name = "esercizi_esame_rust"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "es3"
+path = "src/es3/main.rs"
+ 
+[dependencies]
+rand = "0.8.5" 
