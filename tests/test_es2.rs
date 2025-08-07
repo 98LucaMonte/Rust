@@ -1,7 +1,7 @@
 
 #[cfg(test)]  
 mod tests {
-    use esercizi_esame_rust::es2::razionali::razionali::Razionali;
+    use esercizi_esame_rust::es2::razionali::Razionali;
 
     #[test]
     fn test_new() {

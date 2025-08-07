@@ -116,23 +116,6 @@ mod tests {
         assert_eq!(giocatore.mosse,7);
     }
 
-    //TODO da finire la sua implementazione capire come implementare il test del movimento del giocatore
-    /* 
-    #[test] 
-    fn test_giocatore_movimento() {
-        let campo: Campo = Campo::new(7, &Livello::Difficile);
-        let mut giocatore: Giocatore = Giocatore::new(&campo, &Livello::Difficile);
-        
-        for riga in 0..campo.mappa.len(){
-            for colonna in 0..campo.mappa.len(){
-                match campo.mappa[riga][colonna]{
-                    Cella::Vuota(_) => giocatore.posizione = (riga,colonna),
-                    Cella::Cibo(_) |  Cella::Muro |  Cella::Veleno(_) | Cella::Player => (),
-                }
-            }
-        }
-    }*/
-
     #[test]
     fn test_modifica_forza_giocatore() {
 
