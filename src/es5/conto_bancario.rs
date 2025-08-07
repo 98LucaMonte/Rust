@@ -1,5 +1,4 @@
-use crate::es5::stato::{Argento, Oro, Rosso, Stato};
-  
+use crate::es5::stato::{Argento, Oro, Rosso, Stato};   
 pub struct ContoBancario{
     pub nome_cliente: String,
     pub saldo: f32,
@@ -14,6 +13,9 @@ impl ContoBancario{
     pub fn new(nome_cliente:String,saldo:f32,limite_inferiore:f32,limite_superiore:f32,interesse:f32)-> ContoBancario{
         
         // controllo il limite inferiore deve essere minore del limite superiore
+        if limite_inferiore > limite_superiore{
+            panic!("Il limite superiore deve essere maggiore del limite inferiore");
+        }
 
         let stato: Box<dyn Stato>;
 
@@ -31,7 +33,25 @@ impl ContoBancario{
                         limite_superiore: limite_superiore, interesse: interesse, stato: stato }
     }
 
-    pub fn aggiorna_stato_conto(& mut self){
+    pub fn deposita(& mut self,quantita:f32){
+        // facendo deposita su stato vado ad eseguire deposita dallo stato attuale del conto bancario
+        self.stato.deposita(& mut self.saldo,quantita);
+        self.aggiorna_stato_conto();
+    }
+
+    pub fn preleva(& mut self,quantita:f32){
+        // facendo preleva su stato vado ad eseguire deposita dallo stato attuale del conto bancario
+        self.stato.preleva(& mut self.saldo,quantita);
+        self.aggiorna_stato_conto();
+    }
+
+    pub fn paga_interessi(& mut self){
+        // facendo paga_interessi su stato vado ad eseguire deposita dallo stato attuale del conto bancario
+        self.stato.paga_interessi(& mut self.saldo,&self.interesse);
+        self.aggiorna_stato_conto();
+    }
+
+    fn aggiorna_stato_conto(& mut self){
 
         if self.saldo < self.limite_inferiore{
             self.stato = Box::new(Rosso); 

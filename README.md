@@ -1,10 +1,6 @@
-# es3
-Manca il test sul movimento del giocatore
-  
-# es5
-Manca la possibilità di aggiornare lo stato del conto in modo automatico
-dopo aver eseguito le operazioni deposita e preleva sulla variabile di tipo Stato.
-In questo momento per aggiornare lo stato devo richiamare un altro metodo dopo l'esecuzione di deposita.
+# es 6 
+Da completare es 6 prima di passare alle prossime lezioni/esercizi
 
-È possibile che si debba cambiare l'implementazione e di conseguenza anche i test.
-Ora come ora funziona tutto ma c'è questa modifica da fare. 
+TODO commentare i precedenti esercizi
+
+Ricorda di modificare la visibilità dei campi delle varie struct e accedere a tali campi con i metodi di get e set
