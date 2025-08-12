@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {  
-    use esercizi_esame_rust::es1::anagrammi::anagrammi::sono_anagrammi;
+    use esercizi_esame_rust::es1::anagrammi::sono_anagrammi;
     
     #[test]
     fn test_anagrammi() {
