@@ -7,9 +7,5 @@ edition = "2024"
 name = "es3"
 path = "src/es3/main.rs"
 
-[[bin]]
-name = "es6"
-path = "src/es6/main.rs"
-
 [dependencies]
 rand = "0.8.5" 
