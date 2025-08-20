@@ -4,8 +4,7 @@ use crate::es6::node::{LinkedList, Node};
  * - campo head che rappresenta la testa della lista ed è di tipo LinkedList<T>,
  * - campo size che rappresenta la lunghezza della lista.
 */
-pub struct List<T> 
-{
+pub struct List<T> {
     head: LinkedList<T>,
     size: usize,
 }
@@ -119,7 +118,7 @@ impl <T> List<T> {
         while let Some(nodo) = node_temp {
             
             if pos == i{
-                return Some(&nodo.data)
+                return Some(&nodo.get_data())
             }
 
             node_temp = nodo.next.as_deref();
@@ -137,7 +136,7 @@ impl <T> List<T> {
     }
 
     /**
-     * Metodo che indica se la lista è vuota o meno.
+     * Metodo che indica se la lista è vuota
      */
     pub fn is_empty(&self) -> bool{
         self.head.is_none()

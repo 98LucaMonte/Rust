@@ -3,5 +3,4 @@ Prova a cambiare i metodi dei vari esercizi utilizzando il tipo Option per avere
 
 Ricorda di modificare la visibilità dei campi delle varie struct e accedere a tali campi con i metodi di get e set.
 Questa cosa va fatta negli esercizi: 
-- numero 5: Cambiare la visibilità di stato in conto bancario (è ancora pub),  
-- numero 6.
+- numero 6: Cambiare la visibilità di next in node.

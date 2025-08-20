@@ -3,9 +3,8 @@
  * - campo data T,
  * - campo next che punta ad un tipo LinkedList<T>.
 */
-pub struct Node<T> 
-{
-    pub data: T,
+pub struct Node<T> {
+    data: T,
     pub next: LinkedList<T>,
 }
 
@@ -23,19 +22,11 @@ impl <T> Node<T> {
         Node {  data: data,next: next }
     }
 
-    pub fn get_data(& self){
-        todo!()
+    /** 
+     * Metodo utile per accedere al dato del nodo.
+    */
+    pub fn get_data(& self)-> &T{
+        &self.data
     }
 
-    pub fn get_next(& self){
-        todo!()
-    }
-
-    pub fn set_data(& mut self){
-        todo!()
-    }
-
-    pub fn set_next(& mut self){
-        todo!()
-    }
 }
