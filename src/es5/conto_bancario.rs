@@ -70,11 +70,6 @@ impl ContoBancario{
     pub fn paga_interessi(& mut self){
         // facendo paga_interessi su stato vado ad eseguire deposita dallo stato attuale del conto bancario
         self.stato.paga_interessi(& mut self.saldo,&self.interesse);
-        /* let l= self.stato.as_deref_mut();
-        if l.is_some(){
-            let a = l.unwrap();
-            a.paga_interessi(& mut self.saldo,&self.interesse);
-        }*/
         self.aggiorna_stato_conto(); 
     }
 
