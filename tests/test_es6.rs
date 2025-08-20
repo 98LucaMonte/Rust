@@ -2,6 +2,10 @@
 mod tests {  
     use esercizi_esame_rust::es6::list::List;
     
+    /**
+     * Test utile per verificare se l'inserimento di nuovi nodi nella lista.
+     * Si verifica anche se la lista mantiene l'ordine degli elementi come previsto.
+    */
     #[test]
     fn test_aggiungi_nodo_in_lista() {
         
@@ -54,6 +58,10 @@ mod tests {
 
     }
     
+    /**
+     * Test utile per verificare se la rimozione dei nodi nella lista.
+     * Si verifica anche se la lista mantiene l'ordine degli elementi come previsto.
+    */
     #[test]
     fn test_rimuovi_nodo_in_lista() {
 

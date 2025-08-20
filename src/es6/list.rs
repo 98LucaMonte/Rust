@@ -1,5 +1,9 @@
 use crate::es6::node::{LinkedList, Node};
-
+/** 
+ * Questa è una struct che descrive una lista formata da:
+ * - campo head che rappresenta la testa della lista ed è di tipo LinkedList<T>,
+ * - campo size che rappresenta la lunghezza della lista.
+*/
 pub struct List<T> 
 {
     head: LinkedList<T>,
@@ -8,10 +12,17 @@ pub struct List<T>
 
 impl <T> List<T> {
     
+    /** 
+     * Costruttore utile per creare una Lista.
+    */
     pub fn new() -> List<T>{
         List{head: None ,size:0}
     }
     
+    /** 
+     * Metodo utile ad aggiungere un nuovo elemento nella lista in base alla posizione indicata.
+     * Se la posizione è maggiore della lunghezza della lista inserisce il nodo in fondo alla lista.
+    */
     pub fn add_el(& mut self,pos:usize,data:T){
 
         if self.is_empty() || pos == 0{
@@ -48,6 +59,11 @@ impl <T> List<T> {
         }
     }
 
+    /** 
+     * Metodo utile a rimuovere un elemento nella lista in base alla posizione indicata.
+     * Se la posizione è maggiore della lunghezza della lista oppure se la lista è vuota 
+     * restituisce None altrimenti ritorna l'elemento eliminato.
+    */
     pub fn rm_el(& mut self,pos:usize) -> Option<Node<T>>{
 
         if self.is_empty() || pos >= self.size {
@@ -86,6 +102,11 @@ impl <T> List<T> {
         None
     }
 
+    /** 
+     * Metodo utile ad  un nuovo elemento nella lista.
+     * Se la posizione è maggiore della lunghezza della lista oppure se la lista è vuota 
+     * restituisce None altrimenti ritorna l'elemento eliminato.
+    */
     pub fn get_el(& mut self,pos:usize) -> Option<&T>{
         
         if self.is_empty() || pos >= self.size {
@@ -108,10 +129,16 @@ impl <T> List<T> {
 
     }
 
+    /** 
+     * Metodo che ritorna la lunghezza della lista.
+    */
     pub fn list_len(&self) -> usize{
         self.size
     }
 
+    /**
+     * Metodo che indica se la lista è vuota o meno.
+     */
     pub fn is_empty(&self) -> bool{
         self.head.is_none()
     }

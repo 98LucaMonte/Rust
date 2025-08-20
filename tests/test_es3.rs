@@ -2,6 +2,10 @@
 mod tests {  
     use esercizi_esame_rust::es3::{campo::Campo, cella::Cella, direzione::Direzione, giocatore::Giocatore, livello::Livello};
 
+    /**
+     * Test utile a verificare se celle velenose, vuote, con cibo e con il muro sono effettivamente
+     * il numero che ci si aspetta con il Livello Facile.
+     */
     #[test]
     fn test_campo_facile() {
         let campo: Campo = Campo::new(10, &Livello::Facile);
@@ -11,7 +15,7 @@ mod tests {
         let mut cibo = 0;
         let mut muro = 0;
 
-        for riga in campo.mappa{
+        for riga in campo.get_campo(){
             for cella in riga {
                 
                 match cella {
@@ -31,15 +35,23 @@ mod tests {
 
     }
 
+    /**
+     * Test utile a verificare se la forza e il numero di mosse del giocatore 
+     * sono quelle che ci si aspetta con il Livello Facile.
+     */
     #[test]
     fn test_giocatore_facile(){
         let campo: Campo = Campo::new(9, &Livello::Facile);
         let giocatore: Giocatore = Giocatore::new(&campo, &Livello::Facile);
 
-        assert_eq!(giocatore.forza,10);
-        assert_eq!(giocatore.mosse,11);
+        assert_eq!(giocatore.get_forza(),10);
+        assert_eq!(giocatore.get_mosse(),11);
     }
 
+    /**
+     * Test utile a verificare se celle velenose, vuote, con cibo e con il muro sono effettivamente
+     * il numero che ci si aspetta con il Livello Medio.
+     */
     #[test]
     fn test_campo_medio() {
         let campo: Campo = Campo::new(8, &Livello::Medio);
@@ -49,7 +61,7 @@ mod tests {
         let mut cibo = 0;
         let mut muro = 0;
 
-        for riga in campo.mappa{
+        for riga in campo.get_campo(){
             for cella in riga {
                 
                 match cella {
@@ -69,15 +81,23 @@ mod tests {
 
     }
 
+    /**
+     * Test utile a verificare se la forza e il numero di mosse del giocatore 
+     * sono quelle che ci si aspetta con il Livello Medio.
+     */
     #[test]
     fn test_giocatore_medio() {
         let campo: Campo = Campo::new(8, &Livello::Medio);
         let giocatore: Giocatore = Giocatore::new(&campo, &Livello::Medio);
 
-        assert_eq!(giocatore.forza,8);
-        assert_eq!(giocatore.mosse,8);
+        assert_eq!(giocatore.get_forza(),8);
+        assert_eq!(giocatore.get_mosse(),8);
     }
 
+    /**
+     * Test utile a verificare se celle velenose, vuote, con cibo e con il muro sono effettivamente
+     * il numero che ci si aspetta con il Livello Difficile.
+     */
     #[test]
     fn test_campo_difficile() {
         let campo: Campo = Campo::new(7, &Livello::Difficile);
@@ -87,7 +107,7 @@ mod tests {
         let mut cibo = 0;
         let mut muro = 0;
 
-        for riga in campo.mappa{
+        for riga in campo.get_campo(){
             for cella in riga {
                 
                 match cella {
@@ -107,47 +127,59 @@ mod tests {
 
     }
 
+    /**
+     * Test utile a verificare se la forza e il numero di mosse del giocatore 
+     * sono quelle che ci si aspetta con il Livello Difficile.
+     */
     #[test]
     fn test_giocatore_difficile() {
         let campo: Campo = Campo::new(7, &Livello::Difficile);
         let giocatore: Giocatore = Giocatore::new(&campo, &Livello::Difficile);
 
-        assert_eq!(giocatore.forza,5);
-        assert_eq!(giocatore.mosse,7);
+        assert_eq!(giocatore.get_forza(),5);
+        assert_eq!(giocatore.get_mosse(),7);
     }
 
+    /**
+     * Test utile a verificare se la forza del giocatore viene modificata 
+     * come ci si aspetta a seconda della posizione assunta nel campo da Gioco.
+     */
     #[test]
     fn test_modifica_forza_giocatore() {
 
         let campo: Campo = Campo::new(7, &Livello::Difficile);
         let mut giocatore: Giocatore = Giocatore::new(&campo, &Livello::Difficile);
         
-        for riga in 0..campo.mappa.len(){
-            for colonna in 0..campo.mappa.len(){
-                match campo.mappa[riga][colonna]{
-                    Cella::Veleno(_) => giocatore.posizione = (riga,colonna),
+        for riga in 0..campo.get_campo().len(){
+            for colonna in 0..campo.get_campo().len(){
+                match campo.get_campo()[riga][colonna]{
+                    Cella::Veleno(_) => giocatore.set_posizione( (riga,colonna)),
                     Cella::Cibo(_) |  Cella::Muro |  Cella::Vuota(_) | Cella::Player => (),
                 }
             }
         }
 
         giocatore.modifica_forza_giocatore(&campo);
-        assert_eq!(giocatore.forza,1);
+        assert_eq!(giocatore.get_forza(),1);
 
-        for riga in 0..campo.mappa.len(){
-            for colonna in 0..campo.mappa.len(){
-                match campo.mappa[riga][colonna]{
-                    Cella::Cibo(_) => giocatore.posizione = (riga,colonna),
+        for riga in 0..campo.get_campo().len(){
+            for colonna in 0..campo.get_campo().len(){
+                match campo.get_campo()[riga][colonna]{
+                    Cella::Cibo(_) => giocatore.set_posizione((riga,colonna)),
                     Cella::Veleno(_) |  Cella::Muro |  Cella::Vuota(_) | Cella::Player => (),
                 }
             }
         }
 
         giocatore.modifica_forza_giocatore(&campo);
-        assert_eq!(giocatore.forza,2);
+        assert_eq!(giocatore.get_forza(),2);
 
     }
 
+    /**
+     * Test utile a verificare se la direzione e la posizione assunta dal giocatore 
+     * siano come ci si aspetta quando si va all'interno di una Cella che è un Muro.
+     */
     #[test]
     fn test_controllo_muro() {
         
@@ -219,6 +251,9 @@ mod tests {
 
     }
 
+    /**
+     * Test utile a verificare se il valore della Cella viene modificato. 
+     */
     #[test]
     fn test_cambia_valore_cella() {
 
@@ -229,9 +264,9 @@ mod tests {
         let mut posizione_giocatore: (usize,usize) = (0,0);
         let posizione_appoggio:(usize,usize) = (0,0);
 
-        for riga in 0..campo.mappa.len(){
-            for colonna in 0..campo.mappa.len(){
-                match campo.mappa[riga][colonna]{
+        for riga in 0..campo.get_campo().len(){
+            for colonna in 0..campo.get_campo().len(){
+                match campo.get_campo()[riga][colonna]{
                     Cella::Veleno(_) => posizione_veleno = (riga,colonna),
                     Cella::Cibo(_) |  Cella::Muro |  Cella::Vuota(_) | Cella::Player => (),
                 }
@@ -239,11 +274,11 @@ mod tests {
         }
 
         campo.cambia_valore_cella(posizione_veleno, posizione_appoggio);
-        assert_eq!(campo.mappa[posizione_veleno.0][posizione_veleno.1],Cella::Player);
+        assert_eq!(campo.get_campo()[posizione_veleno.0][posizione_veleno.1],Cella::Player);
 
-        for riga in 0..campo.mappa.len(){
-            for colonna in 0..campo.mappa.len(){
-                match campo.mappa[riga][colonna]{
+        for riga in 0..campo.get_campo().len(){
+            for colonna in 0..campo.get_campo().len(){
+                match campo.get_campo()[riga][colonna]{
                     Cella::Cibo(_) => posizione_cibo = (riga,colonna),
                     Cella::Veleno(_) |  Cella::Muro |  Cella::Vuota(_) | Cella::Player => (),
                 }
@@ -251,11 +286,11 @@ mod tests {
         }
 
         campo.cambia_valore_cella(posizione_cibo, posizione_appoggio);
-        assert_eq!(campo.mappa[posizione_cibo.0][posizione_cibo.1],Cella::Player);
+        assert_eq!(campo.get_campo()[posizione_cibo.0][posizione_cibo.1],Cella::Player);
 
-        for riga in 0..campo.mappa.len(){
-            for colonna in 0..campo.mappa.len(){
-                match campo.mappa[riga][colonna]{
+        for riga in 0..campo.get_campo().len(){
+            for colonna in 0..campo.get_campo().len(){
+                match campo.get_campo()[riga][colonna]{
                     Cella::Vuota(_) => posizione_vuota = (riga,colonna),
                     Cella::Veleno(_) |  Cella::Muro |  Cella::Cibo(_) | Cella::Player => (),
                 }
@@ -263,11 +298,11 @@ mod tests {
         }
 
         campo.cambia_valore_cella(posizione_vuota, posizione_appoggio);
-        assert_eq!(campo.mappa[posizione_vuota.0][posizione_vuota.1],Cella::Player);
+        assert_eq!(campo.get_campo()[posizione_vuota.0][posizione_vuota.1],Cella::Player);
 
-        for riga in 0..campo.mappa.len(){
-            for colonna in 0..campo.mappa.len(){
-                match campo.mappa[riga][colonna]{
+        for riga in 0..campo.get_campo().len(){
+            for colonna in 0..campo.get_campo().len(){
+                match campo.get_campo()[riga][colonna]{
                     Cella::Player => posizione_giocatore = (riga,colonna),
                     Cella::Veleno(_) |  Cella::Muro |  Cella::Cibo(_) | Cella::Vuota(_) => (),
                 }
@@ -275,7 +310,7 @@ mod tests {
         }
 
         campo.cambia_valore_cella(posizione_appoggio, posizione_giocatore);
-        assert_eq!(campo.mappa[posizione_giocatore.0][posizione_giocatore.1],Cella::Vuota(0));
+        assert_eq!(campo.get_campo()[posizione_giocatore.0][posizione_giocatore.1],Cella::Vuota(0));
 
     }
 }

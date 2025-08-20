@@ -1,3 +1,11 @@
+/** 
+ * Implementazione del Trait Stato utile a rappresentare e poi ad implementare il pattern State
+ * Tale Trait implementa i metodi:
+ * - deposita che aumentano il saldo di un conto bancario in base al valore di quantita,
+ * - preleva che diminuisce il saldo di un conto bancario in base al valore di quantita,
+ * - paga_interessi che aumenta il saldo di un conto bancario in base agli interessi di quel conto,
+ * - stato_attuale_conto che restitusce un enum che rappresenta lo stato attuale del conto.
+*/
 pub trait Stato{
     fn deposita(&self, saldo: & mut f32, quantita:f32){
         *saldo += quantita;
@@ -9,6 +17,9 @@ pub trait Stato{
     fn stato_attuale_conto(&self) -> StatoTipo;
 }
 
+/** 
+ * Implementazione della struct Oro che implementa il Trait Stato. Implementa tutti i metodi di Stato.
+*/
 pub struct Oro;  
 impl Stato for Oro {
     
@@ -20,6 +31,9 @@ impl Stato for Oro {
 
 }
 
+/** 
+ * Implementazione della struct Argento che implementa il Trait Stato. Implementa tutti i metodi di Stato tranne il paga_interessi.
+*/
 pub struct Argento;
 impl Stato for Argento{
     
@@ -29,6 +43,9 @@ impl Stato for Argento{
 
 }
 
+/** 
+ * Implementazione della struct Argento che implementa il Trait Stato. Implementa solo il metodo deposita e stato_attuale_conto.
+*/
 pub struct Rosso;
 impl Stato for Rosso {
 
@@ -39,6 +56,9 @@ impl Stato for Rosso {
     fn stato_attuale_conto(&self)->StatoTipo {StatoTipo::Rosso}
 }
 
+/** 
+ * Implementazione dell'enum StatoTipo utile per i test per confrontare se un conto_bancario si trova effettivamente nello Stato che ci si aspetta.
+*/
 #[derive(PartialEq,Debug)]
 pub enum StatoTipo{
     Oro,Argento,Rosso,
