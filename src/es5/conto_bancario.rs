@@ -8,7 +8,7 @@ pub struct ContoBancario{
     limite_inferiore: f32,
     limite_superiore: f32,
     interesse: f32,
-    pub stato: Box<dyn Stato>,
+    stato: Box<dyn Stato>,
 }
 
 impl ContoBancario{
@@ -111,5 +111,12 @@ impl ContoBancario{
      */
     pub fn get_nome_cliente(&self)->String{
         self.nome_cliente.clone()
+    }
+
+    /** 
+     * Metodo utile per accedere allo stato del conto bancario.
+    */
+    pub fn get_stato(&self) -> &Box<dyn Stato>{
+        &self.stato
     }
 }
