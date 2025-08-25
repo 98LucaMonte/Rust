@@ -14,7 +14,7 @@ pub trait Stato{
         *saldo -= quantita;
     }
     fn paga_interessi(&self, saldo: & mut f32, interesse: &f32);
-    fn stato_attuale_conto(&self) -> StatoTipo;
+    fn stato_attuale_conto(&self) -> &str;
 }
 
 /** 
@@ -27,7 +27,7 @@ impl Stato for Oro {
         *saldo += *saldo * *interesse;
     }
 
-    fn stato_attuale_conto(&self) -> StatoTipo {StatoTipo::Oro}
+    fn stato_attuale_conto(&self) -> &str {"Oro"}
 
 }
 
@@ -39,7 +39,7 @@ impl Stato for Argento{
     
     fn paga_interessi(&self, _saldo: & mut f32,_interesse: &f32) { }
 
-    fn stato_attuale_conto(&self)->StatoTipo {StatoTipo::Argento}
+    fn stato_attuale_conto(&self)->&str {"Argento"}
 
 }
 
@@ -53,13 +53,5 @@ impl Stato for Rosso {
 
     fn paga_interessi(&self, _saldo: & mut f32,_interesse: &f32) {}
 
-    fn stato_attuale_conto(&self)->StatoTipo {StatoTipo::Rosso}
-}
-
-/** 
- * Implementazione dell'enum StatoTipo utile per i test per confrontare se un conto_bancario si trova effettivamente nello Stato che ci si aspetta.
-*/
-#[derive(PartialEq,Debug)]
-pub enum StatoTipo{
-    Oro,Argento,Rosso,
+    fn stato_attuale_conto(&self)->&str {"Rosso"}
 }
