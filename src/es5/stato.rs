@@ -10,9 +10,7 @@ pub trait Stato{
     fn deposita(&self, saldo: & mut f32, quantita:f32){
         *saldo += quantita;
     }
-    fn preleva(&self, saldo: & mut f32, quantita:f32) {
-        *saldo -= quantita;
-    }
+    fn preleva(&self, saldo: & mut f32, quantita:f32);
     fn paga_interessi(&self, saldo: & mut f32, interesse: &f32);
     fn stato_attuale_conto(&self) -> &str;
 }
@@ -22,6 +20,10 @@ pub trait Stato{
 */
 pub struct Oro;  
 impl Stato for Oro {
+    
+    fn preleva(&self, saldo: & mut f32, quantita:f32) {
+        *saldo -= quantita;
+    }
     
     fn paga_interessi(&self, saldo: & mut f32, interesse: &f32) {
         *saldo += *saldo * *interesse;
@@ -36,8 +38,14 @@ impl Stato for Oro {
 */
 pub struct Argento;
 impl Stato for Argento{
-    
-    fn paga_interessi(&self, _saldo: & mut f32,_interesse: &f32) { }
+        
+    fn preleva(&self, saldo: & mut f32, quantita:f32) {
+        *saldo -= quantita;
+    }
+
+    fn paga_interessi(&self, _saldo: & mut f32, _interesse: &f32) {
+        
+    }
 
     fn stato_attuale_conto(&self)->&str {"Argento"}
 
@@ -49,9 +57,13 @@ impl Stato for Argento{
 pub struct Rosso;
 impl Stato for Rosso {
 
-    fn preleva(&self, _saldo: & mut f32, _quantita:f32) {}
+    fn preleva(&self, _saldo: & mut f32, _quantita:f32) {
+        
+    }
 
-    fn paga_interessi(&self, _saldo: & mut f32,_interesse: &f32) {}
+    fn paga_interessi(&self, _saldo: & mut f32, _interesse: &f32) {
+        
+    }
 
     fn stato_attuale_conto(&self)->&str {"Rosso"}
 }

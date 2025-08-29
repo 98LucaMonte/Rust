@@ -55,12 +55,15 @@ impl ContoBancario{
 
     /** 
      * Metodo che richiama il metodo preleva contenuto nel trait Stato (e verra richiamato nella struct in cui appartiene Stato ossia Rosso,Argento o Oro). 
+     * Eseguo un controllo per verificare se il saldo sia effettivamente maggiore della quantità da prelevare.
      * Dopo aver eseguito il metodo si aggiorna lo stato del conto.
     */
     pub fn preleva(& mut self,quantita:f32){
         // facendo preleva su stato vado ad eseguire deposita dallo stato attuale del conto bancario
-        self.stato.preleva(& mut self.saldo,quantita);
-        self.aggiorna_stato_conto();
+        if self.saldo >= quantita {
+            self.stato.preleva(& mut self.saldo,quantita);
+            self.aggiorna_stato_conto();
+        }
     }
 
     /** 

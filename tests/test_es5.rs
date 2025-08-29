@@ -88,10 +88,27 @@ mod tests {
         conto_bancario_luca.preleva(1000.0);        
         assert_eq!(conto_bancario_luca.get_stato().stato_attuale_conto(), "Argento");
         assert_eq!(conto_bancario_luca.get_saldo(), 2000.0);
-
+        
         conto_bancario_luca.preleva(1200.0);
         assert_eq!(conto_bancario_luca.get_stato().stato_attuale_conto(), "Rosso");
         assert_eq!(conto_bancario_luca.get_saldo(), 800.0);
+    }
+
+    /**
+     * Test utile se il conto bancario quando è nello Stato Argento aggiorna il suo stato dopo che viene eseguito il metodo preleva.
+     * Rispetto al test precedente si vuole verificare se si preleva anche il saldo è inferiore rispetto alla quantità richiesta da prelevare.
+    */
+    #[test]
+    fn test_conto_argento_preleva_massimo_importo() {
+        let mut conto_bancario_luca = ContoBancario::new("Luca".to_string(), 3000.0, 
+                                                                    1000.0, 10000.0, 0.05);
+        conto_bancario_luca.preleva(3000.1);        
+        assert_eq!(conto_bancario_luca.get_stato().stato_attuale_conto(), "Argento");
+        assert_eq!(conto_bancario_luca.get_saldo(), 3000.0);
+        
+        conto_bancario_luca.preleva(3000.0);
+        assert_eq!(conto_bancario_luca.get_stato().stato_attuale_conto(), "Rosso");
+        assert_eq!(conto_bancario_luca.get_saldo(), 0.0);
     }
 
     /**
@@ -139,6 +156,24 @@ mod tests {
         conto_bancario_luca.preleva(8000.0);
         assert_eq!(conto_bancario_luca.get_stato().stato_attuale_conto(), "Rosso");
         assert_eq!(conto_bancario_luca.get_saldo(), 700.0);
+    }
+
+     /**
+     * Test utile se il conto bancario quando è nello Stato Oro aggiorna il suo stato dopo che viene eseguito il metodo preleva.
+     * Rispetto al test precedente si vuole verificare se si preleva anche il saldo è inferiore rispetto alla quantità richiesta da prelevare.
+    */
+    #[test]
+    fn test_conto_oro_preleva_massimo_importo() {
+        let mut conto_bancario_luca = ContoBancario::new("Luca".to_string(), 12000.0, 
+                                                                    1000.0, 10000.0, 0.05);
+        conto_bancario_luca.preleva(12000.1);        
+        assert_eq!(conto_bancario_luca.get_stato().stato_attuale_conto(), "Oro");
+        assert_eq!(conto_bancario_luca.get_saldo(), 12000.0);
+
+        conto_bancario_luca.preleva(12000.0);
+        assert_eq!(conto_bancario_luca.get_stato().stato_attuale_conto(), "Rosso");
+        assert_eq!(conto_bancario_luca.get_saldo(), 0.0);
+
     }
 
     /**
