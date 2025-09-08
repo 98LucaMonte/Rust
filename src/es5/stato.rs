@@ -7,11 +7,9 @@
  * - stato_attuale_conto che restitusce un enum che rappresenta lo stato attuale del conto.
 */
 pub trait Stato{
-    fn deposita(&self, saldo: & mut f32, quantita:f32){
-        *saldo += quantita;
-    }
-    fn preleva(&self, saldo: & mut f32, quantita:f32);
-    fn paga_interessi(&self, saldo: & mut f32, interesse: &f32);
+    fn deposita(&self, _saldo: & mut f32, _quantita:f32){}
+    fn preleva(&self, _saldo: & mut f32, _quantita:f32){}
+    fn paga_interessi(&self, _saldo: & mut f32, _interesse: &f32){}
     fn stato_attuale_conto(&self) -> &str;
 }
 
@@ -21,6 +19,10 @@ pub trait Stato{
 pub struct Oro;  
 impl Stato for Oro {
     
+    fn deposita(&self, saldo: & mut f32, quantita:f32){
+        *saldo += quantita;
+    }
+
     fn preleva(&self, saldo: & mut f32, quantita:f32) {
         *saldo -= quantita;
     }
@@ -34,17 +36,17 @@ impl Stato for Oro {
 }
 
 /** 
- * Implementazione della struct Argento che implementa il Trait Stato. Implementa tutti i metodi di Stato tranne il paga_interessi.
+ * Implementazione della struct Argento che implementa il Trait Stato. Implementa tutti i metodi del trait Stato tranne il paga_interessi.
 */
 pub struct Argento;
 impl Stato for Argento{
-        
-    fn preleva(&self, saldo: & mut f32, quantita:f32) {
-        *saldo -= quantita;
+    
+    fn deposita(&self, saldo: & mut f32, quantita:f32){
+        *saldo += quantita;
     }
 
-    fn paga_interessi(&self, _saldo: & mut f32, _interesse: &f32) {
-        
+    fn preleva(&self, saldo: & mut f32, quantita:f32) {
+        *saldo -= quantita;
     }
 
     fn stato_attuale_conto(&self)->&str {"Argento"}
@@ -52,18 +54,15 @@ impl Stato for Argento{
 }
 
 /** 
- * Implementazione della struct Argento che implementa il Trait Stato. Implementa solo il metodo deposita e stato_attuale_conto.
+ * Implementazione della struct Rosso che implementa il Trait Stato. Implementa solo il metodo deposita e stato_attuale_conto.
 */
 pub struct Rosso;
 impl Stato for Rosso {
 
-    fn preleva(&self, _saldo: & mut f32, _quantita:f32) {
-        
-    }
-
-    fn paga_interessi(&self, _saldo: & mut f32, _interesse: &f32) {
-        
+    fn deposita(&self, saldo: & mut f32, quantita:f32){
+        *saldo += quantita;
     }
 
     fn stato_attuale_conto(&self)->&str {"Rosso"}
+
 }

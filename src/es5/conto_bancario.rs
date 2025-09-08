@@ -59,7 +59,8 @@ impl ContoBancario{
      * Dopo aver eseguito il metodo si aggiorna lo stato del conto.
     */
     pub fn preleva(& mut self,quantita:f32){
-        // facendo preleva su stato vado ad eseguire deposita dallo stato attuale del conto bancario
+        // facendo preleva su stato vado ad eseguire preleva dallo stato attuale del conto bancario
+        // si esegue preleva soltanto se il saldo attuale è maggiore uguale alla quantità richiesta da prelevare.
         if self.saldo >= quantita {
             self.stato.preleva(& mut self.saldo,quantita);
             self.aggiorna_stato_conto();
@@ -71,7 +72,7 @@ impl ContoBancario{
      * Dopo aver eseguito il metodo si aggiorna lo stato del conto.
     */
     pub fn paga_interessi(& mut self){
-        // facendo paga_interessi su stato vado ad eseguire deposita dallo stato attuale del conto bancario
+        // facendo paga_interessi su stato vado ad eseguire paga_interessi dallo stato attuale del conto bancario
         self.stato.paga_interessi(& mut self.saldo,&self.interesse);
         self.aggiorna_stato_conto(); 
     }
