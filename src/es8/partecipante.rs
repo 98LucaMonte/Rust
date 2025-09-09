@@ -7,8 +7,8 @@ use crate::es8::{messaggio::Messaggio, moneta::Moneta, risultato_asta::Risultato
  * Al suo interno si trova il nome, l'identificativo univoco di ogni partecipante e la sua disponibilità economica.
 */
 pub struct Partecipante{
-    nome: Option<String>,
-    id: Option<usize>,
+    nome: String,
+    id: usize,
     disponibilità: usize,
 }
 
@@ -19,21 +19,21 @@ impl Partecipante {
     */
     pub fn new(id:usize)->Self{
         let (nome,disponibilita) = Partecipante::genera_nome_disponibilita();
-        Partecipante { nome: Some(nome.to_string()),id:Some(id),disponibilità:disponibilita }
+        Partecipante { nome: nome.to_string(),id:id,disponibilità:disponibilita }
     }
 
     /** 
      * Metodo utile per ritornare il nome del Partecipante.
     */
     pub fn get_nome(&self)->&String{
-        self.nome.as_ref().unwrap()
+        &self.nome
     }
 
     /** 
      * Metodo utile per ritornare l'identificativo del Partecipante.
     */
     pub fn get_id(&self)->usize{
-        *self.id.as_ref().unwrap()
+        self.id
     }
 
     /** 
@@ -52,7 +52,7 @@ impl Partecipante {
         let arr_nomi = vec!["Luca","Noemi","Davide","Giorgia","Francesco","Federico","Giovanna"];
         let n = rand::thread_rng().gen_range(0..arr_nomi.len());
         
-        let arr_valori = vec![1000,2000,3000,4000,5000,6000];
+        let arr_valori = vec![140,150,200,280,370,430,480,500];
         let m = rand::thread_rng().gen_range(0..arr_valori.len());
         
         (arr_nomi[n],arr_valori[m])                    
@@ -77,7 +77,9 @@ impl Partecipante {
 
         let id_partecipante = self.get_id();
         let nome_partecipante = self.get_nome().clone();
+        let disponibilita = self.get_disponibilita();
         let mut asta = true;
+
 
         let thread_partecipante = thread::spawn(move || {
 
@@ -89,21 +91,25 @@ impl Partecipante {
 
                     Messaggio::Informazioni { descrizione_prodotto, prezzo_attuale } => {
 
-                        {
-                            let r = risultato.lock().unwrap();
-                            // Verifico se è la prima informazione che arriva dal banditore riguardante l'asta.
-                            if r.get_prezzo_venduto() == prezzo_attuale{
-                                println!("[Partecipante Nome:{}, Id:{}] Ho ricevuto le informazioni iniziali dell'asta [Prezzo_iniziale:{}, Descrizione:{}]",nome_partecipante.clone(),id_partecipante,prezzo_attuale,descrizione_prodotto); 
-                            }
-                        }
+                        println!("[Partecipante Nome:{}, Id:{}] Le informazioni attuali dell'asta. [Prezzo_iniziale:{}, Descrizione:{}]",nome_partecipante.clone(),id_partecipante,prezzo_attuale,descrizione_prodotto); 
 
                         if asta {
                             match Moneta::lancio_moneta() {
                                 Moneta::Testa => {
-                                    // Faccio un'offerta
-                                    let aumento_offerta = rand::thread_rng().gen_range(20..=25);
-                                    let nuova_offerta = aumento_offerta as f32 + prezzo_attuale;
-                                    let _ = tx.send(Messaggio::Offerta { nome_partecipante: nome_partecipante.clone(), id_partecipante: id_partecipante, prezzo: nuova_offerta });
+                                    
+                                    if disponibilita as f32 >= prezzo_attuale {
+                                        // Faccio un'offerta ma controllo se ho le disponibilità per poter fare l'offerta.
+                                        let aumento_massimo = disponibilita as f32 - prezzo_attuale;
+                                        let aumento_offerta = rand::thread_rng().gen_range(0..aumento_massimo as i32);
+                                        let nuova_offerta = aumento_offerta as f32 + prezzo_attuale;
+                                        let _ = tx.send(Messaggio::Offerta { nome_partecipante: nome_partecipante.clone(), id_partecipante: id_partecipante, prezzo: nuova_offerta });
+                                    }
+                                    else {
+                                        // Se non ho le disponibilità allora esco dall'asta perché non posso più superare l'offerta attuale.
+                                        let _ = tx.send(Messaggio::Esci { nome_partecipante: nome_partecipante.clone(), id_partecipante: id_partecipante });
+                                        asta = false;
+                                    }
+                                    
                                 },
                                 Moneta::Croce => {
                                     // Esco dall'asta
