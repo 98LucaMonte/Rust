@@ -4,12 +4,14 @@ use crate::es6::node::{LinkedList, Node};
  * - campo head che rappresenta la testa della lista ed è di tipo LinkedList<T>,
  * - campo size che rappresenta la lunghezza della lista.
 */
-pub struct List<T> {
+pub struct List<T>
+{
     head: LinkedList<T>,
     size: usize,
 }
 
-impl <T> List<T> {
+impl <T> List<T>
+{
     
     /** 
      * Costruttore utile per creare una Lista.
@@ -52,19 +54,16 @@ impl <T> List<T> {
             
             while let Some(node) = node_temp {
                 
-                if pos-1 == i{
-                    let node_old = node.get_mut_next().take();
-                    let node_new = Some(Box::new(Node::new(data, node_old)));
-                    node.set_next(node_new);
-                    return;
-                }
-
                 /* 
+                 * Scorro la lista fino a che non raggiungo la posizione precedente a quella in cui devo
+                 * aggiungere il nuovo nodo. 
+                 * Vado a prendere il nodo successivo al nodo in cui mi trovo e lo inserisco nel campo next
+                 * del nodo che creo. Infine, nel campo next del nodo corrente inserisco il nodo appena creato. 
                  * Se il nodo attuale nel campo next è None vuol dire che siamo arrivati alla fine della lista,
                  * quindi è inutile scorrerla ancora perciò, aggiungo come da indicazioni, il nodo alla fine della lista
                  * anche se la posizione in cui devo aggiungere questo nodo non è quella corretta. 
                 */
-                if node.get_next().is_none(){
+                if pos-1 == i || node.get_next().is_none(){
                     let node_old = node.get_mut_next().take();
                     let node_new = Some(Box::new(Node::new(data, node_old)));
                     node.set_next(node_new);

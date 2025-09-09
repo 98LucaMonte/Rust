@@ -3,7 +3,8 @@
  * - campo data T,
  * - campo next che punta ad un tipo LinkedList<T>.
 */
-pub struct Node<T> {
+pub struct Node<T>
+{
     data: T,
     next: LinkedList<T>,
 }
@@ -13,7 +14,8 @@ pub struct Node<T> {
  */
 pub type LinkedList<T> = Option<Box<Node<T>>>;
 
-impl <T> Node<T> {
+impl <T> Node<T>
+{
 
     /** 
      * Costruttore utile per creare un Node.
