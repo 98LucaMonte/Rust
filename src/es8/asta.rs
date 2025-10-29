@@ -81,8 +81,8 @@ impl Asta {
         // Qui avvio il Thread del banditore a cui passo il prodotto, il vec con tutti i sender 
         // a cui scrivere un messaggio, il Receveir utile a ricevere i messaggi dei partecipanti e 
         // infine il numero di partecipanti all'asta
-        let thread_banditore= self.banditore.avvia_thread(self.get_prodotto(), tx_band, rx_b,risultato.clone());
-        thread_banditore.join().unwrap();
+        let thread_banditore = self.banditore.avvia_thread(self.get_prodotto(), tx_band, rx_b,risultato.clone());
+        let _ = thread_banditore.join();
         
         for t in threads_partecipanti{
             let _ = t.join();

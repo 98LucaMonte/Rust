@@ -1,4 +1,3 @@
-
 /** 
  * Struttura che rappresenta il Prodotto dell'asta.
  * È composta dal nome, dal suo identificativo, dalla descrizione, il prezzo di partenza e di riserva. 

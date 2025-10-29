@@ -19,7 +19,7 @@ impl Partecipante {
     */
     pub fn new(id:usize)->Self{
         let (nome,disponibilita) = Partecipante::genera_nome_disponibilita();
-        Partecipante { nome: nome.to_string(),id:id,disponibilità:disponibilita }
+        Partecipante { nome: nome,id:id,disponibilità:disponibilita }
     }
 
     /** 
@@ -47,15 +47,15 @@ impl Partecipante {
      * Funzione utile a creare in modo randomico un Nome e una disponibilità economica da assegnare 
      * al Partecipante nel momento della sua creazione. 
     */
-    fn genera_nome_disponibilita()->(&'static str,usize){
+    fn genera_nome_disponibilita()->(String,usize){
         
-        let arr_nomi = vec!["Luca","Noemi","Davide","Giorgia","Francesco","Federico","Giovanna"];
+        let arr_nomi: Vec<&str> = vec!["Luca","Noemi","Davide","Giorgia","Francesco","Federico","Giovanna"];
         let n = rand::thread_rng().gen_range(0..arr_nomi.len());
         
         let arr_valori = vec![140,150,200,280,370,430,480,500];
         let m = rand::thread_rng().gen_range(0..arr_valori.len());
         
-        (arr_nomi[n],arr_valori[m])                    
+        (arr_nomi[n].to_string(),arr_valori[m])                    
     }
 
     /*
@@ -79,7 +79,6 @@ impl Partecipante {
         let nome_partecipante = self.get_nome().clone();
         let disponibilita = self.get_disponibilita();
         let mut asta = true;
-
 
         let thread_partecipante = thread::spawn(move || {
 

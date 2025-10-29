@@ -25,8 +25,8 @@ impl Campo {
     /**
      * Metodo utile per accedere alla mappa della struct Campo.
      */
-    pub fn get_campo(&self)-> Vec<Vec<Cella>>{
-        self.mappa.clone()
+    pub fn get_campo(&self)-> &Vec<Vec<Cella>>{
+        &self.mappa
     }
 
     /** 

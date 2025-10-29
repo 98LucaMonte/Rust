@@ -23,7 +23,6 @@ impl RisultatoAsta{
     }
 
     pub fn get_nome_partecipante_vincitore(&self)-> Option<String>{
-        //&self.nome_partecipante_vincente.as_ref().unwrap()
         if self.nome_partecipante_vincente.is_none(){
             None
         }

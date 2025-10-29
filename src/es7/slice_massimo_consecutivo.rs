@@ -35,7 +35,7 @@ pub fn slice_massimo_consecutivo<F>(array: &[i32], pred: F) -> &[i32]
 where 
     F: Fn(&i32) -> bool
 {
-    let (mut inizio,mut len,inizio_curr,len_curr,_pos_att) = array.iter().fold(
+    let (inizio,len,_inizio_curr,_len_curr,_pos_att) = array.iter().fold(
         (0,0,0,0,0), 
         |(mut inizio,mut len, mut inizio_curr, mut len_curr, mut pos_att),x| {
             if pred(x){
@@ -56,8 +56,13 @@ where
                 len_curr = 0;
 
             }
-
+ 
             pos_att += 1;
+            
+            if len_curr > len {
+                inizio = inizio_curr;
+                len = len_curr;
+            }
             /*
              * println!("num:{}\tinizio:{}\tlen:{}\tinizio_curr:{}\tlen_curr:{}\tpos_att:{}",*x,inizio,len,inizio_curr,len_curr,pos_att);
              * Scommenta per vedere l'evoluzione della serie di elementi e verificare la correttezza del ragionamento
@@ -66,11 +71,7 @@ where
         }  
     );
     
-    if len_curr > len {
-        inizio = inizio_curr;
-        len = len_curr;
-    }
+    
 
     &array[inizio..inizio+len]
 }
-
